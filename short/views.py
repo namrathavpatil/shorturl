@@ -20,6 +20,7 @@ def get_name(request, *args, **kwargs):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
+            context = {}
             a = form.cleaned_data['your_name']
             print(a)
             b = hashlib.md5(str(a).encode()).hexdigest()
@@ -28,9 +29,8 @@ def get_name(request, *args, **kwargs):
 
             reg.save()
             l = User.objects.filter(s_name=b).first()
-            print(b)
-
-        return render(request, 'name.html', {'form': form})
+            context['e'] = b[:3]
+        return render(request, 'name.html', context)
 
     # if a GET (or any other method) we'll create a blank form
     else:
