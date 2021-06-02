@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from short.views import get_name, get_url
+from short.views import get_name, get_url, get_list, get_del
 from short.models import User
 
 urlpatterns = [
     path('', get_name),
+    path('list', get_list),
     path('<str:name>', get_url),
     path('admin/', admin.site.urls),
+    path('delete/id=<str:id>', get_del),
 ]
