@@ -33,25 +33,25 @@
                         <div class="text-center text-white">
                             <!-- Page heading-->
                             <h2> &nbsp </h2>
-                            <h2> &nbsp </h2>
-                            <h2> &nbsp </h2>
-                            <h2> &nbsp </h2>
-                            <h2> &nbsp </h2>
-                            <h2> &nbsp </h2>
-                            <h2> &nbsp </h2>
-                            <h2> &nbsp </h2>
-                            <!-- Signup form-->
-                            <form  method="POST">
+                             <form  method="POST">
                                 {% csrf_token %}
                             
                                 <input type='url' name='your_name' class="form-control"  placeholder="Enter your URL...">
                                 <h2> &nbsp </h2>
                                 <input type="submit"  class="btn btn-primary" value="Submit">
                             
+                                
                             
                             </form>
                             
-                            <h2>{{context}}</h2>
+                            <h2> &nbsp </h2>
+                            <h2 style="font-family: 'Times New Roman', Times, serif;font-style: italic;">Your Shorthand URL: {{post}}</h2>
+
+
+                            <h2> &nbsp </h2>
+                            <!-- Signup form-->
+                           
+                            
                         </div>
                     </div>
                 </div>
