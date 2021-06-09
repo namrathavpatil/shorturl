@@ -127,7 +127,7 @@ STATIC_URL = '/static/'
 # Static files (CSS, JavaScript, Images)
 
 # Heroku settings
-if os.getcwd() == '/shorturl':
+if os.getcwd() == '/':
     DATABASES = {
         'default': dj_database_url.config(default='postgres://localhost')
     }
