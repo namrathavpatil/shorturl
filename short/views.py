@@ -4,10 +4,7 @@ from django.urls.conf import re_path
 <<<<<<< HEAD
 from .models import User
 from .models import Sign
-=======
-from .models import Sign, User
 
->>>>>>> 805fce934aa9286893acec0a7c173a239c40256a
 import hashlib
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -135,10 +132,6 @@ def get_sign(request):
                 'a': 'password should not be empty'}
             return render(request, 'signup.html', context)
 
-=======
-        a = request.POST.get('User_name')
-        b = request.POST.get('Password')
->>>>>>> 805fce934aa9286893acec0a7c173a239c40256a
         reg = Sign(username=a, password=b)
         reg.save()
         return redirect('/login')
@@ -168,19 +161,7 @@ def get_login(request):
                     'a': 'password or username not match or please enter correct password'}
                 return render(request, 'login.html', context)
         # print(request.session['username'])
-=======
-    if request.method == 'POST':
-        a = request.POST.get('User_name')
-        b = request.POST.get('Password')
-        c = (Sign.objects.get(pk=a))
-        if b == c.password:
-            request.session['username'] = a
-            return redirect('/')
-        else:
-            context = {'a': 'password not match'}
-            return render(request, 'login.html', context)
 
->>>>>>> 805fce934aa9286893acec0a7c173a239c40256a
     return render(request, 'login.html', {})
 
 
@@ -192,7 +173,3 @@ def logout(request):
     except:
         context = {'a': 'Please login to logout'}
         return render(request, 'login.html', context)
-=======
-    del request.session['username']
-    return redirect("/")
->>>>>>> 805fce934aa9286893acec0a7c173a239c40256a
