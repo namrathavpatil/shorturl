@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls.conf import re_path
-<<<<<<< HEAD
+
 from .models import User
 from .models import Sign
 
@@ -121,25 +121,30 @@ def get_del(request, **kwargs):
 
 
 def get_sign(request):
-    if request.method == 'POST':
-<<<<<<< HEAD
+    try:
+        if (request.session['username']) != None:
+            print(request.session['username'])
+            context1 = {'a': "Already logged in"}
+        return render(request, 'name.html', context1)
+    except:
+        if request.method == 'POST':
 
-        a = request.POST.get('User_name')
+            a = request.POST.get('User_name')
 
-        b = request.POST.get('Password')
-        if len(b) == 0:
-            context = {
-                'a': 'password should not be empty'}
-            return render(request, 'signup.html', context)
+            b = request.POST.get('Password')
+            if len(b) == 0:
+                context = {
+                    'a': 'password should not be empty'}
+                return render(request, 'signup.html', context)
 
-        reg = Sign(username=a, password=b)
-        reg.save()
-        return redirect('/login')
+            reg = Sign(username=a, password=b)
+            reg.save()
+            return redirect('/login')
     return render(request, 'signup.html')
 
 
 def get_login(request):
-<<<<<<< HEAD
+
     try:
         if (request.session['username']) != None:
             print(request.session['username'])
@@ -156,9 +161,13 @@ def get_login(request):
 
                     request.session['username'] = a
                     return redirect('/')
+                else:
+                    context = {
+                        'a': 'password or username not match or please enter correctly'}
+                    return render(request, 'login.html', context)
             except:
                 context = {
-                    'a': 'password or username not match or please enter correct password'}
+                    'a': 'password or username not match or please enter correctly'}
                 return render(request, 'login.html', context)
         # print(request.session['username'])
 
@@ -166,7 +175,7 @@ def get_login(request):
 
 
 def logout(request):
-<<<<<<< HEAD
+
     try:
         del request.session['username']
         return redirect("/")
