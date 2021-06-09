@@ -54,7 +54,7 @@ def get_name(request, *args, **kwargs):
                     l = User.objects.filter(s_name=b).first()
                     # a = (User.objects.get(pk=b[:3]))
                     # b = a.name
-                    context['post'] = 'http://127.0.0.1:8000/'+b[:5]
+                    context['post'] = 'https://rocky-caverns-00934.herokuapp.com/'+b[:5]
 
                     return render(request, 'name.html', context)
             except:
