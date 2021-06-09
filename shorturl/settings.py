@@ -125,12 +125,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-STATICFILES_DIRS = [
-    'E:\shorturl\static',
 
-    'static/',
-]
 # Heroku settings
 if os.getcwd() == '/app':
     DATABASES = {
