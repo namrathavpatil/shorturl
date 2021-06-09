@@ -122,12 +122,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-STATIC_URL = '/static/'
 
+STATIC_URL = '/static/'
 # Static files (CSS, JavaScript, Images)
 
 # Heroku settings
-if os.getcwd() == '/app':
+if os.getcwd() == '/shorturl':
     DATABASES = {
         'default': dj_database_url.config(default='postgres://localhost')
     }
