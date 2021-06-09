@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls.conf import re_path
 from .models import User
-
+from .models import Sign
 import hashlib
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -26,21 +27,40 @@ def get_name(request, *args, **kwargs):
         a = request.POST['your_name']
         print(a)
         b = hashlib.md5(str(a).encode()).hexdigest()
-        print(a, b)
-        reg = User(name=a, id=b[:5])
-        print(request)
+        try:
+            if (User.objects.get(pk=b[:5])):
+                if (str(User.objects.get(pk=b[:5]).login) == request.session['username']):
+                    context['post'] = b[:5]
+                    return render(request, 'name.html', context)
+                else:
+                    print("dfdsfsdzdcnsdcnsknkx v,mdx v, ckzc z,mdc sdc skc sm")
+                    context['post'] = 'Wrong User'
+                    return render(request, 'name.html', context)
 
-        reg.save()
-        l = User.objects.filter(s_name=b).first()
-        # a = (User.objects.get(pk=b[:3]))
-        # b = a.name
-        context['post'] = b[:5]
+            print(a, b)
+        except:
+            try:
+                if request.session['username']:
+                    c = request.session['username']
 
-        return render(request, 'name.html', context)
+                    c = (Sign.objects.get(pk=c))
+
+                    reg = User(name=a, id=b[:5], login=c)
+                    print(request)
+
+                    reg.save()
+                    l = User.objects.filter(s_name=b).first()
+                    # a = (User.objects.get(pk=b[:3]))
+                    # b = a.name
+                    context['post'] = 'http://127.0.0.1:8000/'+b[:5]
+
+                    return render(request, 'name.html', context)
+            except:
+                return redirect("/login")
 
     # if a GET (or any other method) we'll create a blank form
 
-    return render(request, 'name.html', context)
+    return render(request, 'name.html')
 
 
 def get_url(request, *args, **kwargs):
@@ -77,14 +97,73 @@ def get_url(request, *args, **kwargs):
 def get_list(request):
     context = {'li': [],
                'df': []}
-    for i in User.objects.all():
-        context['li'].append([i.name, i.id])
+    try:
+        for i in User.objects.all():
+            print(i.login)
+            print(1, request.session['username'])
+            if str(i.login) == request.session['username']:
+                print(2, i.login)
+                context['li'].append([i.name, i.id])
+    except:
+        return redirect('/login')
 
     return render(request, 'list.html', context)
 
 
-def get_del(request, id):
+def get_del(request, **kwargs):
     # print("dhsjfhdsjsdfsdgfdgdskndsjfdskjfhksjzdcbm,zscbmzxcbmzbcmzscbkzjscbjzskcbzsjhcjzscbjzshxjzscjdzshckjzsbcfjzsgfjzsbfvjsdzbfjxzdhvjxdbf")
-    print(id)
-    User.objects.filter(id=id).delete()
+    print(kwargs['id'])
+    id = kwargs['id']
+    User.objects.filter(id=kwargs['id']).delete()
     return redirect("/list")
+
+
+def get_sign(request):
+    if request.method == 'POST':
+
+        a = request.POST.get('User_name')
+
+        b = request.POST.get('Password')
+        if len(b) == 0:
+            context = {
+                'a': 'password should not be empty'}
+            return render(request, 'signup.html', context)
+
+        reg = Sign(username=a, password=b)
+        reg.save()
+        return redirect('/login')
+    return render(request, 'signup.html')
+
+
+def get_login(request):
+    try:
+        if (request.session['username']) != None:
+            print(request.session['username'])
+            context1 = {'a': "Already logged in"}
+        return render(request, 'name.html', context1)
+
+    except:
+        if request.method == 'POST':
+            a = request.POST.get('User_name')
+            b = request.POST.get('Password')
+            try:
+                c = (Sign.objects.get(pk=a))
+                if b == c.password and b != None:
+
+                    request.session['username'] = a
+                    return redirect('/')
+            except:
+                context = {
+                    'a': 'password or username not match or please enter correct password'}
+                return render(request, 'login.html', context)
+        # print(request.session['username'])
+    return render(request, 'login.html', {})
+
+
+def logout(request):
+    try:
+        del request.session['username']
+        return redirect("/")
+    except:
+        context = {'a': 'Please login to logout'}
+        return render(request, 'login.html', context)
