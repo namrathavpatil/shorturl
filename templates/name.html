@@ -23,16 +23,23 @@
             <div class="container">
                 <a class="navbar-brand" href="http://127.0.0.1:8000/list">LIST OF SURL</a>
                 
-                <a class="btn btn-primary" href="#signup">Sign Up</a>
+                <a class="btn btn-secondary" href="login" style="margin-left: 780px;">Login</a>
+                <a class="btn btn-primary" href="signup">Sign Up</a>
+                <a href="/logout" style="margin-left: 1150px;">logout</a>
             </div>
         </nav>
+        
         <!-- Masthead-->
+       
         <header class="masthead">
+            
             <div class="container position-relative">
                 <div class="row justify-content-center">
                     <div class="col-xl-6">
                         <div class="text-center text-white">
+                            
                             <!-- Page heading-->
+                            <h2 style="font-family: 'Times New Roman', Times, serif;font-style: italic;"> {{a}}</h2>
                             <h2> &nbsp </h2>
                              <form  method="POST">
                                 {% csrf_token %}
