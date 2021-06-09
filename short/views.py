@@ -1,8 +1,13 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls.conf import re_path
+<<<<<<< HEAD
 from .models import User
 from .models import Sign
+=======
+from .models import Sign, User
+
+>>>>>>> 805fce934aa9286893acec0a7c173a239c40256a
 import hashlib
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -120,6 +125,7 @@ def get_del(request, **kwargs):
 
 def get_sign(request):
     if request.method == 'POST':
+<<<<<<< HEAD
 
         a = request.POST.get('User_name')
 
@@ -129,6 +135,10 @@ def get_sign(request):
                 'a': 'password should not be empty'}
             return render(request, 'signup.html', context)
 
+=======
+        a = request.POST.get('User_name')
+        b = request.POST.get('Password')
+>>>>>>> 805fce934aa9286893acec0a7c173a239c40256a
         reg = Sign(username=a, password=b)
         reg.save()
         return redirect('/login')
@@ -136,6 +146,7 @@ def get_sign(request):
 
 
 def get_login(request):
+<<<<<<< HEAD
     try:
         if (request.session['username']) != None:
             print(request.session['username'])
@@ -157,13 +168,31 @@ def get_login(request):
                     'a': 'password or username not match or please enter correct password'}
                 return render(request, 'login.html', context)
         # print(request.session['username'])
+=======
+    if request.method == 'POST':
+        a = request.POST.get('User_name')
+        b = request.POST.get('Password')
+        c = (Sign.objects.get(pk=a))
+        if b == c.password:
+            request.session['username'] = a
+            return redirect('/')
+        else:
+            context = {'a': 'password not match'}
+            return render(request, 'login.html', context)
+
+>>>>>>> 805fce934aa9286893acec0a7c173a239c40256a
     return render(request, 'login.html', {})
 
 
 def logout(request):
+<<<<<<< HEAD
     try:
         del request.session['username']
         return redirect("/")
     except:
         context = {'a': 'Please login to logout'}
         return render(request, 'login.html', context)
+=======
+    del request.session['username']
+    return redirect("/")
+>>>>>>> 805fce934aa9286893acec0a7c173a239c40256a
